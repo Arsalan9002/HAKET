@@ -16,13 +16,13 @@ import pandas as pd
 
 # sys.path.append('active_stream/')
 # os.chdir('/Users/Shehroz/Desktop/active_stream-master/active_stream')
-from streaming import Streamer, Listener
-from annotation import Annotator
-from credentials import credentials
-from text_processing import TextProcessor
-from monitor import Monitor
-from classification import Classifier, Trainer
-from ModelTest import Modeling
+from .streaming import Streamer, Listener
+from .annotation import Annotator
+from .credentials import credentials
+from .text_processing import TextProcessor
+from .monitor import Monitor
+from .classification import Classifier, Trainer
+from .ModelTest import Modeling
 import numpy as np
 import warnings
 
