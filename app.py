@@ -41,6 +41,8 @@ def index():
 def connected():
     logging.info('Received connect request')
     emit('log', {'data': 'Connected'})
+    global annotator
+    annotator.start()
 
 @socketio.on('tweet_relevant')
 def tweet_relevant():
@@ -63,20 +65,18 @@ def tweet_irrelevant():
     logging.debug('Received skip')
     data['queues']['annotation_response'].put('skip')
 
-@socketio.on('connect')
-def test_connect():
-    global annotator
-    if not annotator:
-        time.sleep(10)
-    if annotator.is_alive():
-        # annotator.resume()
-        logging.debug('Annotator already alive. Refreshing')
-        emit('keywords', {'keywords': list(streamer.keywords)})
-        annotator.first = True
-    else:
-        logging.info('Starting Annotator.')
-        emit('keywords', {'keywords': list(streamer.keywords)})
-        annotator.start()
+# @socketio.on('connect')
+# def test_connect():
+#     global annotator
+#     if annotator.is_alive():
+#         # annotator.resume()
+#         logging.debug('Annotator already alive. Refreshing')
+#         emit('keywords', {'keywords': list(streamer.keywords)})
+#         annotator.first = True
+#     else:
+#         logging.info('Starting Annotator.')
+#         emit('keywords', {'keywords': list(streamer.keywords)})
+#         annotator.start()
 
 @socketio.on('disconnect')
 def test_disconnect():
@@ -158,8 +158,7 @@ def Results():
 
 
 
-@app.before_first_request
-def main():
+if __name__ == '__main__':
 
     BUF_SIZE = 1000
     db = 'HAKET_stream'
@@ -237,6 +236,3 @@ def main():
         logging.info('Done')
         sys.exit('Main thread stopped by user.')
 
-
-if __name__ == '__main__':
-    main()
