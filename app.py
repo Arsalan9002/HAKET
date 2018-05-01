@@ -29,7 +29,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode='gevent', logger=False)
 thread = None
-annotator = None
+# annotator = None
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -218,7 +218,7 @@ if __name__ == '__main__':
     trainer = Trainer(data=data, streamer=streamer,
                       clf=SGDClassifier(loss='log', penalty='elasticnet'))
 
-    threads = [streamer, text_processor, monitor, classifier, trainer]
+    threads = [streamer, text_processor, monitor, classifier, trainer, annotator]
     check = True
 
     for t in threads:
