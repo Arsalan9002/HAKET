@@ -23,6 +23,10 @@ from text_processing import TextProcessor
 from monitor import Monitor
 from classification import Classifier, Trainer
 from ModelTest import Modeling
+import numpy as np
+import warnings
+
+warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning)
 
 async_mode = None
 app = Flask(__name__)
@@ -117,10 +121,11 @@ def Results():
     global annotator
     annotator.join
 
-    client = MongoClient('localhost', 27017)
+    uri = "mongodb+srv://%s:%s@%s" % ("HAKET", "HAKETBS", "haket-du1us.mongodb.net")
+    client = MongoClient(uri)  # defaults to port 27017
     db = client.HAKET_stream
     collection = db.data
-    print('************////////////////////////////***************')
+    logging.debug('************////////////////////////////***************')
     # mongobatchupdate()
 
     x = collection.find({'classifier_relevant': True})
@@ -150,8 +155,7 @@ def Results():
     print(realclusters)
 
     #return render_template("result.html", clusters=realclusters)
-    #return render_template("result.html", clusters=realclusters)
-    #emit('redirect', {'url': url_for('result.html')})
+    return render_template("index.html", clusters=realclusters)
 
 
 if __name__ == '__main__':
@@ -161,10 +165,11 @@ if __name__ == '__main__':
     collection = 'data'
     filters = {'languages': ['en'], 'locations': []}
     n_before_train = 1
-
+    # client = MongoClient("mongodb://ian:secretPassword@123.45.67.89/")  # defaults to port 27017
+    uri = "mongodb+srv://%s:%s@%s" % ("HAKET", "HAKETBS", "haket-du1us.mongodb.net")
 
     data = {
-            'database': MongoClient()[db][collection],
+            'database': MongoClient(uri)[db][collection],
             'queues': {
                 'text_processing': queue.Queue(BUF_SIZE),
                 'model': queue.Queue(1),
