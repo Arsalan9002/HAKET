@@ -1,0 +1,267 @@
+2018-03-05 13:16:13,331 (MainThread) 
+
+
+
+
+
+2018-03-05 13:16:13,332 (MainThread) **********ACTIVE LEARNING**********
+2018-03-05 13:16:13,332 (MainThread) Starting Application...
+2018-03-05 13:16:15,655 (MainThread) Starting Streamer...
+2018-03-05 13:16:15,655 (MainThread) **********THREAD STARTING**********
+2018-03-05 13:16:15,656 (Streamer) Ready!
+2018-03-05 13:16:15,656 (MainThread) Starting Text Processor...
+2018-03-05 13:16:15,656 (MainThread) **********THREAD STARTING**********
+2018-03-05 13:16:15,656 (Text Processor) Ready!
+2018-03-05 13:16:15,656 (MainThread) Starting Monitor...
+2018-03-05 13:16:15,656 (MainThread) **********THREAD STARTING**********
+2018-03-05 13:16:15,656 (Monitor) Ready!
+2018-03-05 13:16:15,656 (MainThread) Starting Classifier...
+2018-03-05 13:16:15,657 (MainThread) **********THREAD STARTING**********
+2018-03-05 13:16:15,657 (Classifier) Ready!
+2018-03-05 13:16:15,657 (MainThread) Starting Trainer...
+2018-03-05 13:16:15,657 (MainThread) **********THREAD STARTING**********
+2018-03-05 13:16:15,658 (Trainer) Ready!
+2018-03-05 13:16:19,184 (DummyThread-1) Starting Annotator.
+2018-03-05 13:16:19,185 (Annotator) Ready!
+2018-03-05 13:16:32,523 (DummyThread-2) Annotator already alive. Refreshing
+2018-03-05 13:16:32,592 (DummyThread-2) Received refresh
+2018-03-05 13:17:05,469 (DummyThread-2) Received request to add new keyword. Sending to Streamer.
+2018-03-05 13:17:05,474 (Streamer) Ready!
+2018-03-05 13:17:05,528 (Streamer) Tracking: {'trump'}
+2018-03-05 13:17:05,530 (Thread-3) Signing request <PreparedRequest [POST]> using client <Client client_key=qv8NO5JXSmfdkf58Pypb8YTr7, client_secret=****, resource_owner_key=46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL, resource_owner_secret=****, signature_method=HMAC-SHA1, signature_type=AUTH_HEADER, callback_uri=None, rsa_key=None, verifier=None, realm=None, encoding=utf-8, decoding=None, nonce=None, timestamp=None>
+2018-03-05 13:17:05,530 (Thread-3) Including body in call to sign: True
+2018-03-05 13:17:05,531 (Thread-3) Collected params: [('delimited', 'length'), ('oauth_nonce', '121868177791342706741520237825'), ('oauth_timestamp', '1520237825'), ('oauth_version', '1.0'), ('oauth_signature_method', 'HMAC-SHA1'), ('oauth_consumer_key', 'qv8NO5JXSmfdkf58Pypb8YTr7'), ('oauth_token', '46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL'), ('track', 'trump'), ('language', 'en')]
+2018-03-05 13:17:05,531 (Thread-3) Normalized params: delimited=length&language=en&oauth_consumer_key=qv8NO5JXSmfdkf58Pypb8YTr7&oauth_nonce=121868177791342706741520237825&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1520237825&oauth_token=46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL&oauth_version=1.0&track=trump
+2018-03-05 13:17:05,531 (Thread-3) Normalized URI: https://stream.twitter.com/1.1/statuses/filter.json
+2018-03-05 13:17:05,533 (Thread-3) Signing: signature base string: POST&https%3A%2F%2Fstream.twitter.com%2F1.1%2Fstatuses%2Ffilter.json&delimited%3Dlength%26language%3Den%26oauth_consumer_key%3Dqv8NO5JXSmfdkf58Pypb8YTr7%26oauth_nonce%3D121868177791342706741520237825%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1520237825%26oauth_token%3D46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL%26oauth_version%3D1.0%26track%3Dtrump
+2018-03-05 13:17:05,534 (Thread-3) Signature: OoonchMDPnjjklVFiFfujx/0qEo=
+2018-03-05 13:17:05,534 (Thread-3) Updated url: https://stream.twitter.com/1.1/statuses/filter.json?delimited=length
+2018-03-05 13:17:05,535 (Thread-3) Updated headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '23', 'Authorization': 'OAuth oauth_nonce="121868177791342706741520237825", oauth_timestamp="1520237825", oauth_version="1.0", oauth_signature_method="HMAC-SHA1", oauth_consumer_key="qv8NO5JXSmfdkf58Pypb8YTr7", oauth_token="46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL", oauth_signature="OoonchMDPnjjklVFiFfujx%2F0qEo%3D"'}
+2018-03-05 13:17:05,535 (Thread-3) Updated body: 'track=trump&language=en'
+2018-03-05 13:17:05,627 (Thread-3) Starting new HTTPS connection (1): stream.twitter.com
+2018-03-05 13:17:06,826 (Thread-3) https://stream.twitter.com:443 "POST /1.1/statuses/filter.json?delimited=length HTTP/1.1" 200 None
+2018-03-05 13:17:07,778 (Annotator) Sending tweet for annotation. Id: 970573908431835136evaluation: False
+2018-03-05 13:17:16,902 (DummyThread-2) Received: tweet_irrelevant
+2018-03-05 13:17:16,903 (Annotator) Received response irrelevant
+2018-03-05 13:17:16,907 (Annotator) Sending tweet for annotation. Id: 970573909006471168evaluation: False
+2018-03-05 13:17:19,750 (DummyThread-2) Received: tweet_relevant
+2018-03-05 13:17:19,754 (Annotator) Received response relevant
+2018-03-05 13:17:19,759 (Annotator) Sending tweet for annotation. Id: 970573908889030656evaluation: False
+2018-03-05 13:17:23,184 (DummyThread-2) Received request to add new keyword. Sending to Streamer.
+2018-03-05 13:17:25,543 (Streamer) Ready!
+2018-03-05 13:17:25,597 (Streamer) Tracking: {'guns', 'trump'}
+2018-03-05 13:17:25,599 (Thread-4) Signing request <PreparedRequest [POST]> using client <Client client_key=qv8NO5JXSmfdkf58Pypb8YTr7, client_secret=****, resource_owner_key=46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL, resource_owner_secret=****, signature_method=HMAC-SHA1, signature_type=AUTH_HEADER, callback_uri=None, rsa_key=None, verifier=None, realm=None, encoding=utf-8, decoding=None, nonce=None, timestamp=None>
+2018-03-05 13:17:25,599 (Thread-4) Including body in call to sign: True
+2018-03-05 13:17:25,601 (Thread-4) Collected params: [('delimited', 'length'), ('oauth_nonce', '43993602214722194251520237845'), ('oauth_timestamp', '1520237845'), ('oauth_version', '1.0'), ('oauth_signature_method', 'HMAC-SHA1'), ('oauth_consumer_key', 'qv8NO5JXSmfdkf58Pypb8YTr7'), ('oauth_token', '46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL'), ('track', 'guns,trump'), ('language', 'en')]
+2018-03-05 13:17:25,601 (Thread-4) Normalized params: delimited=length&language=en&oauth_consumer_key=qv8NO5JXSmfdkf58Pypb8YTr7&oauth_nonce=43993602214722194251520237845&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1520237845&oauth_token=46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL&oauth_version=1.0&track=guns%2Ctrump
+2018-03-05 13:17:25,601 (Thread-4) Normalized URI: https://stream.twitter.com/1.1/statuses/filter.json
+2018-03-05 13:17:25,602 (Thread-4) Signing: signature base string: POST&https%3A%2F%2Fstream.twitter.com%2F1.1%2Fstatuses%2Ffilter.json&delimited%3Dlength%26language%3Den%26oauth_consumer_key%3Dqv8NO5JXSmfdkf58Pypb8YTr7%26oauth_nonce%3D43993602214722194251520237845%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1520237845%26oauth_token%3D46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL%26oauth_version%3D1.0%26track%3Dguns%252Ctrump
+2018-03-05 13:17:25,602 (Thread-4) Signature: QsnsBv28WrsCb25CCgfAjAHkVt8=
+2018-03-05 13:17:25,602 (Thread-4) Updated url: https://stream.twitter.com/1.1/statuses/filter.json?delimited=length
+2018-03-05 13:17:25,602 (Thread-4) Updated headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '30', 'Authorization': 'OAuth oauth_nonce="43993602214722194251520237845", oauth_timestamp="1520237845", oauth_version="1.0", oauth_signature_method="HMAC-SHA1", oauth_consumer_key="qv8NO5JXSmfdkf58Pypb8YTr7", oauth_token="46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL", oauth_signature="QsnsBv28WrsCb25CCgfAjAHkVt8%3D"'}
+2018-03-05 13:17:25,602 (Thread-4) Updated body: 'track=guns%2Ctrump&language=en'
+2018-03-05 13:17:25,605 (Thread-4) Starting new HTTPS connection (1): stream.twitter.com
+2018-03-05 13:17:27,010 (Thread-4) https://stream.twitter.com:443 "POST /1.1/statuses/filter.json?delimited=length HTTP/1.1" 200 None
+2018-03-05 13:17:29,049 (DummyThread-2) Received: tweet_irrelevant
+2018-03-05 13:17:29,050 (Annotator) Received response irrelevant
+2018-03-05 13:17:29,055 (Annotator) Sending tweet for annotation. Id: 970573911824871424evaluation: False
+2018-03-05 13:17:40,488 (DummyThread-2) Received: tweet_irrelevant
+2018-03-05 13:17:40,491 (Annotator) Received response irrelevant
+2018-03-05 13:17:40,516 (Annotator) Sending tweet for annotation. Id: 970573912479158272evaluation: False
+2018-03-05 13:17:43,964 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:17:43,967 (Annotator) Received response irrelevant
+2018-03-05 13:17:43,972 (Annotator) Sending tweet for annotation. Id: 970573913171382272evaluation: False
+2018-03-05 13:17:50,081 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:17:50,082 (Annotator) Received response irrelevant
+2018-03-05 13:17:50,090 (Annotator) Sending tweet for annotation. Id: 970573913548705792evaluation: False
+2018-03-05 13:17:57,792 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:17:57,793 (Annotator) Received response irrelevant
+2018-03-05 13:17:57,799 (Annotator) Sending tweet for annotation. Id: 970573913762684929evaluation: False
+2018-03-05 13:18:08,124 (DummyThread-1) Received request to add new keyword. Sending to Streamer.
+2018-03-05 13:18:08,220 (Streamer) Ready!
+2018-03-05 13:18:08,271 (Streamer) Tracking: {'NRA', 'guns', 'trump'}
+2018-03-05 13:18:08,273 (Thread-6) Signing request <PreparedRequest [POST]> using client <Client client_key=qv8NO5JXSmfdkf58Pypb8YTr7, client_secret=****, resource_owner_key=46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL, resource_owner_secret=****, signature_method=HMAC-SHA1, signature_type=AUTH_HEADER, callback_uri=None, rsa_key=None, verifier=None, realm=None, encoding=utf-8, decoding=None, nonce=None, timestamp=None>
+2018-03-05 13:18:08,273 (Thread-6) Including body in call to sign: True
+2018-03-05 13:18:08,274 (Thread-6) Collected params: [('delimited', 'length'), ('oauth_nonce', '104406329815245258671520237888'), ('oauth_timestamp', '1520237888'), ('oauth_version', '1.0'), ('oauth_signature_method', 'HMAC-SHA1'), ('oauth_consumer_key', 'qv8NO5JXSmfdkf58Pypb8YTr7'), ('oauth_token', '46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL'), ('track', 'NRA,guns,trump'), ('language', 'en')]
+2018-03-05 13:18:08,274 (Thread-6) Normalized params: delimited=length&language=en&oauth_consumer_key=qv8NO5JXSmfdkf58Pypb8YTr7&oauth_nonce=104406329815245258671520237888&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1520237888&oauth_token=46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL&oauth_version=1.0&track=NRA%2Cguns%2Ctrump
+2018-03-05 13:18:08,274 (Thread-6) Normalized URI: https://stream.twitter.com/1.1/statuses/filter.json
+2018-03-05 13:18:08,274 (Thread-6) Signing: signature base string: POST&https%3A%2F%2Fstream.twitter.com%2F1.1%2Fstatuses%2Ffilter.json&delimited%3Dlength%26language%3Den%26oauth_consumer_key%3Dqv8NO5JXSmfdkf58Pypb8YTr7%26oauth_nonce%3D104406329815245258671520237888%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1520237888%26oauth_token%3D46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL%26oauth_version%3D1.0%26track%3DNRA%252Cguns%252Ctrump
+2018-03-05 13:18:08,274 (Thread-6) Signature: nNQioHF7hHEZfZli7Th4bM4ulQY=
+2018-03-05 13:18:08,274 (Thread-6) Updated url: https://stream.twitter.com/1.1/statuses/filter.json?delimited=length
+2018-03-05 13:18:08,275 (Thread-6) Updated headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '36', 'Authorization': 'OAuth oauth_nonce="104406329815245258671520237888", oauth_timestamp="1520237888", oauth_version="1.0", oauth_signature_method="HMAC-SHA1", oauth_consumer_key="qv8NO5JXSmfdkf58Pypb8YTr7", oauth_token="46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL", oauth_signature="nNQioHF7hHEZfZli7Th4bM4ulQY%3D"'}
+2018-03-05 13:18:08,275 (Thread-6) Updated body: 'track=NRA%2Cguns%2Ctrump&language=en'
+2018-03-05 13:18:08,277 (Thread-6) Starting new HTTPS connection (1): stream.twitter.com
+2018-03-05 13:18:09,686 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:18:09,687 (Annotator) Received response irrelevant
+2018-03-05 13:18:09,693 (Annotator) Sending tweet for annotation. Id: 970573913951358976evaluation: False
+2018-03-05 13:18:11,527 (Thread-6) https://stream.twitter.com:443 "POST /1.1/statuses/filter.json?delimited=length HTTP/1.1" 200 None
+2018-03-05 13:18:22,093 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:18:22,095 (Annotator) Received response irrelevant
+2018-03-05 13:18:22,102 (Annotator) Sending tweet for annotation. Id: 970573915381780482evaluation: False
+2018-03-05 13:18:27,165 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:18:27,167 (Annotator) Received response irrelevant
+2018-03-05 13:18:27,177 (Annotator) Sending tweet for annotation. Id: 970573916593848320evaluation: False
+2018-03-05 13:18:40,984 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:18:40,986 (Annotator) Received response irrelevant
+2018-03-05 13:18:40,995 (Annotator) Sending tweet for annotation. Id: 970573918271504384evaluation: False
+2018-03-05 13:18:45,623 (DummyThread-5) Received: tweet_relevant
+2018-03-05 13:18:45,626 (Annotator) Received response relevant
+2018-03-05 13:18:45,657 (Annotator) Sending tweet for annotation. Id: 970573918175186946evaluation: False
+2018-03-05 13:18:45,698 (Trainer) Training new model (version 0)
+2018-03-05 13:18:45,810 (Classifier) Received new model (version 0)
+2018-03-05 13:18:57,712 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:18:57,713 (Annotator) Received response irrelevant
+2018-03-05 13:18:57,727 (Annotator) Sending tweet for annotation. Id: 970574311940485120evaluation: False
+2018-03-05 13:19:01,095 (DummyThread-5) Received: tweet_relevant
+2018-03-05 13:19:01,098 (Annotator) Received response relevant
+2018-03-05 13:19:01,105 (Annotator) Sending tweet for annotation. Id: 970573918640549889evaluation: True
+2018-03-05 13:19:01,123 (Trainer) Training new model (version 1)
+2018-03-05 13:19:01,372 (Classifier) Received new model (version 1)
+2018-03-05 13:19:14,928 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:19:14,931 (Annotator) Received response irrelevant
+2018-03-05 13:19:14,943 (Annotator) Sending tweet for annotation. Id: 970574070386515968evaluation: False
+2018-03-05 13:19:30,933 (DummyThread-5) Received: tweet_relevant
+2018-03-05 13:19:30,938 (Annotator) Received response relevant
+2018-03-05 13:19:30,971 (Annotator) Sending tweet for annotation. Id: 970574009149673472evaluation: False
+2018-03-05 13:19:30,989 (Trainer) Training new model (version 2)
+2018-03-05 13:19:31,345 (Classifier) Received new model (version 2)
+2018-03-05 13:19:40,200 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:19:40,200 (Annotator) Received response irrelevant
+2018-03-05 13:19:40,206 (Annotator) Sending tweet for annotation. Id: 970573919311691778evaluation: True
+2018-03-05 13:19:48,998 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:19:49,001 (Annotator) Received response irrelevant
+2018-03-05 13:19:49,010 (Annotator) Sending tweet for annotation. Id: 970573919634771968evaluation: True
+2018-03-05 13:19:54,056 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:19:54,058 (Annotator) Received response irrelevant
+2018-03-05 13:19:54,074 (Annotator) Sending tweet for annotation. Id: 970574154155155456evaluation: False
+2018-03-05 13:19:57,901 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:19:57,904 (Annotator) Received response irrelevant
+2018-03-05 13:19:57,960 (Annotator) Sending tweet for annotation. Id: 970574520166830080evaluation: False
+2018-03-05 13:20:01,091 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:20:01,092 (Annotator) Received response irrelevant
+2018-03-05 13:20:01,108 (Annotator) Sending tweet for annotation. Id: 970574533810950144evaluation: False
+2018-03-05 13:20:03,871 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:20:03,876 (Annotator) Received response irrelevant
+2018-03-05 13:20:03,905 (Annotator) Sending tweet for annotation. Id: 970573941411647488evaluation: False
+2018-03-05 13:20:06,825 (DummyThread-5) Received: tweet_irrelevant
+2018-03-05 13:20:06,827 (Annotator) Received response irrelevant
+2018-03-05 13:20:06,859 (Annotator) Sending tweet for annotation. Id: 970574024425254912evaluation: False
+2018-03-05 13:20:13,533 (DummyThread-1) Received: tweet_irrelevant
+2018-03-05 13:20:13,536 (Annotator) Received response irrelevant
+2018-03-05 13:20:13,544 (Annotator) Sending tweet for annotation. Id: 970573919370522624evaluation: True
+2018-03-05 13:20:44,104 (DummyThread-1) Received: tweet_irrelevant
+2018-03-05 13:20:44,108 (Annotator) Received response irrelevant
+2018-03-05 13:20:44,144 (Annotator) Sending tweet for annotation. Id: 970574784965718016evaluation: False
+2018-03-05 13:20:50,139 (DummyThread-1) Received: tweet_irrelevant
+2018-03-05 13:20:50,141 (Annotator) Received response irrelevant
+2018-03-05 13:20:50,161 (Annotator) Sending tweet for annotation. Id: 970574363312492544evaluation: False
+2018-03-05 13:20:57,269 (DummyThread-1) Received: tweet_irrelevant
+2018-03-05 13:20:57,272 (Annotator) Received response irrelevant
+2018-03-05 13:20:57,292 (Annotator) Sending tweet for annotation. Id: 970574841131696130evaluation: False
+2018-03-05 13:21:04,774 (DummyThread-1) Received: tweet_relevant
+2018-03-05 13:21:04,779 (Annotator) Received response relevant
+2018-03-05 13:21:04,827 (Annotator) Sending tweet for annotation. Id: 970574830381813761evaluation: False
+2018-03-05 13:21:04,830 (Trainer) Training new model (version 3)
+2018-03-05 13:21:05,731 (Classifier) Received new model (version 3)
+2018-03-05 13:21:06,576 (DummyThread-1) Received: tweet_irrelevant
+2018-03-05 13:21:06,578 (Annotator) Received response irrelevant
+2018-03-05 13:21:06,961 (Annotator) Sending tweet for annotation. Id: 970574753525243905evaluation: False
+2018-03-05 13:21:23,182 (DummyThread-1) Received: tweet_irrelevant
+2018-03-05 13:21:23,201 (Annotator) Received response irrelevant
+2018-03-05 13:21:23,279 (Annotator) Sending tweet for annotation. Id: 970574296744685568evaluation: False
+2018-03-05 13:21:29,954 (DummyThread-1) Received: tweet_relevant
+2018-03-05 13:21:29,955 (Annotator) Received response relevant
+2018-03-05 13:21:29,966 (Annotator) Sending tweet for annotation. Id: 970573919672389633evaluation: True
+2018-03-05 13:21:29,968 (Trainer) Training new model (version 4)
+2018-03-05 13:21:30,726 (Classifier) Received new model (version 4)
+2018-03-05 13:21:35,510 (DummyThread-1) Received: tweet_irrelevant
+2018-03-05 13:21:35,511 (Annotator) Received response irrelevant
+2018-03-05 13:21:35,541 (Annotator) Sending tweet for annotation. Id: 970574570750128128evaluation: False
+2018-03-05 13:21:42,926 (DummyThread-1) Received: tweet_irrelevant
+2018-03-05 13:21:42,928 (Annotator) Received response irrelevant
+2018-03-05 13:21:42,951 (Annotator) Sending tweet for annotation. Id: 970574605659369472evaluation: False
+2018-03-05 13:21:55,208 (DummyThread-1) Received: tweet_relevant
+2018-03-05 13:21:55,209 (Annotator) Received response relevant
+2018-03-05 13:21:55,222 (Annotator) Sending tweet for annotation. Id: 970573919878033409evaluation: True
+2018-03-05 13:21:55,253 (Trainer) Training new model (version 5)
+2018-03-05 13:21:55,711 (Classifier) Received new model (version 5)
+2018-03-05 13:22:02,372 (DummyThread-1) Received: tweet_irrelevant
+2018-03-05 13:22:02,375 (Annotator) Received response irrelevant
+2018-03-05 13:22:02,386 (Annotator) Sending tweet for annotation. Id: 970573919630610432evaluation: True
+2018-03-05 13:22:53,888 (DummyThread-1) Received request to remove keyword. Sending to Streamer.
+2018-03-05 13:22:53,948 (Streamer) Ready!
+2018-03-05 13:22:54,002 (Streamer) Tracking: {'NRA', 'trump'}
+2018-03-05 13:22:54,004 (Thread-7) Signing request <PreparedRequest [POST]> using client <Client client_key=qv8NO5JXSmfdkf58Pypb8YTr7, client_secret=****, resource_owner_key=46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL, resource_owner_secret=****, signature_method=HMAC-SHA1, signature_type=AUTH_HEADER, callback_uri=None, rsa_key=None, verifier=None, realm=None, encoding=utf-8, decoding=None, nonce=None, timestamp=None>
+2018-03-05 13:22:54,004 (Thread-7) Including body in call to sign: True
+2018-03-05 13:22:54,004 (Thread-7) Collected params: [('delimited', 'length'), ('oauth_nonce', '113458131219524566481520238174'), ('oauth_timestamp', '1520238174'), ('oauth_version', '1.0'), ('oauth_signature_method', 'HMAC-SHA1'), ('oauth_consumer_key', 'qv8NO5JXSmfdkf58Pypb8YTr7'), ('oauth_token', '46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL'), ('track', 'NRA,trump'), ('language', 'en')]
+2018-03-05 13:22:54,004 (Thread-7) Normalized params: delimited=length&language=en&oauth_consumer_key=qv8NO5JXSmfdkf58Pypb8YTr7&oauth_nonce=113458131219524566481520238174&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1520238174&oauth_token=46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL&oauth_version=1.0&track=NRA%2Ctrump
+2018-03-05 13:22:54,004 (Thread-7) Normalized URI: https://stream.twitter.com/1.1/statuses/filter.json
+2018-03-05 13:22:54,005 (Thread-7) Signing: signature base string: POST&https%3A%2F%2Fstream.twitter.com%2F1.1%2Fstatuses%2Ffilter.json&delimited%3Dlength%26language%3Den%26oauth_consumer_key%3Dqv8NO5JXSmfdkf58Pypb8YTr7%26oauth_nonce%3D113458131219524566481520238174%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1520238174%26oauth_token%3D46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL%26oauth_version%3D1.0%26track%3DNRA%252Ctrump
+2018-03-05 13:22:54,005 (Thread-7) Signature: SXN81AWn+UVDzRRhjyS5LR/fVT0=
+2018-03-05 13:22:54,005 (Thread-7) Updated url: https://stream.twitter.com/1.1/statuses/filter.json?delimited=length
+2018-03-05 13:22:54,005 (Thread-7) Updated headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '29', 'Authorization': 'OAuth oauth_nonce="113458131219524566481520238174", oauth_timestamp="1520238174", oauth_version="1.0", oauth_signature_method="HMAC-SHA1", oauth_consumer_key="qv8NO5JXSmfdkf58Pypb8YTr7", oauth_token="46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL", oauth_signature="SXN81AWn%2BUVDzRRhjyS5LR%2FfVT0%3D"'}
+2018-03-05 13:22:54,005 (Thread-7) Updated body: 'track=NRA%2Ctrump&language=en'
+2018-03-05 13:22:54,089 (Thread-7) Starting new HTTPS connection (1): stream.twitter.com
+2018-03-05 13:22:54,822 (DummyThread-1) Received request to remove keyword. Sending to Streamer.
+2018-03-05 13:22:57,753 (Thread-7) https://stream.twitter.com:443 "POST /1.1/statuses/filter.json?delimited=length HTTP/1.1" 200 None
+2018-03-05 13:23:00,859 (DummyThread-1) Received request to add new keyword. Sending to Streamer.
+2018-03-05 13:23:05,276 (DummyThread-1) Received skip
+2018-03-05 13:23:05,278 (Annotator) Received response skip
+2018-03-05 13:23:05,305 (Annotator) Sending tweet for annotation. Id: 970574108684468226evaluation: False
+2018-03-05 13:23:10,948 (DummyThread-1) Received: tweet_relevant
+2018-03-05 13:23:10,949 (Annotator) Received response relevant
+2018-03-05 13:23:10,955 (Trainer) Training new model (version 6)
+2018-03-05 13:23:11,004 (Annotator) Sending tweet for annotation. Id: 970575023663665152evaluation: False
+2018-03-05 13:23:11,215 (Classifier) Received new model (version 6)
+2018-03-05 13:23:13,164 (DummyThread-1) Received: tweet_irrelevant
+2018-03-05 13:23:13,165 (Annotator) Received response irrelevant
+2018-03-05 13:23:13,200 (Annotator) Sending tweet for annotation. Id: 970574413765791744evaluation: False
+2018-03-05 13:23:14,006 (Streamer) Ready!
+2018-03-05 13:23:14,063 (Streamer) Tracking: {'trump', 'america'}
+2018-03-05 13:23:14,064 (Thread-8) Signing request <PreparedRequest [POST]> using client <Client client_key=qv8NO5JXSmfdkf58Pypb8YTr7, client_secret=****, resource_owner_key=46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL, resource_owner_secret=****, signature_method=HMAC-SHA1, signature_type=AUTH_HEADER, callback_uri=None, rsa_key=None, verifier=None, realm=None, encoding=utf-8, decoding=None, nonce=None, timestamp=None>
+2018-03-05 13:23:14,065 (Thread-8) Including body in call to sign: True
+2018-03-05 13:23:14,065 (Thread-8) Collected params: [('delimited', 'length'), ('oauth_nonce', '166213495779542934931520238194'), ('oauth_timestamp', '1520238194'), ('oauth_version', '1.0'), ('oauth_signature_method', 'HMAC-SHA1'), ('oauth_consumer_key', 'qv8NO5JXSmfdkf58Pypb8YTr7'), ('oauth_token', '46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL'), ('track', 'trump,america'), ('language', 'en')]
+2018-03-05 13:23:14,066 (Thread-8) Normalized params: delimited=length&language=en&oauth_consumer_key=qv8NO5JXSmfdkf58Pypb8YTr7&oauth_nonce=166213495779542934931520238194&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1520238194&oauth_token=46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL&oauth_version=1.0&track=trump%2Camerica
+2018-03-05 13:23:14,066 (Thread-8) Normalized URI: https://stream.twitter.com/1.1/statuses/filter.json
+2018-03-05 13:23:14,066 (Thread-8) Signing: signature base string: POST&https%3A%2F%2Fstream.twitter.com%2F1.1%2Fstatuses%2Ffilter.json&delimited%3Dlength%26language%3Den%26oauth_consumer_key%3Dqv8NO5JXSmfdkf58Pypb8YTr7%26oauth_nonce%3D166213495779542934931520238194%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1520238194%26oauth_token%3D46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL%26oauth_version%3D1.0%26track%3Dtrump%252Camerica
+2018-03-05 13:23:14,066 (Thread-8) Signature: xsGuh5yyfeDHkpG5mZpDV2aJzps=
+2018-03-05 13:23:14,067 (Thread-8) Updated url: https://stream.twitter.com/1.1/statuses/filter.json?delimited=length
+2018-03-05 13:23:14,067 (Thread-8) Updated headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '33', 'Authorization': 'OAuth oauth_nonce="166213495779542934931520238194", oauth_timestamp="1520238194", oauth_version="1.0", oauth_signature_method="HMAC-SHA1", oauth_consumer_key="qv8NO5JXSmfdkf58Pypb8YTr7", oauth_token="46911518-sMAro1ZIjjevECaInZUyNxsnG6GQBzPpHrH8AekLL", oauth_signature="xsGuh5yyfeDHkpG5mZpDV2aJzps%3D"'}
+2018-03-05 13:23:14,067 (Thread-8) Updated body: 'track=trump%2Camerica&language=en'
+2018-03-05 13:23:14,069 (Thread-8) Starting new HTTPS connection (1): stream.twitter.com
+2018-03-05 13:23:15,359 (Thread-8) https://stream.twitter.com:443 "POST /1.1/statuses/filter.json?delimited=length HTTP/1.1" 200 None
+2018-03-05 13:23:25,004 (DummyThread-1) Received: tweet_irrelevant
+2018-03-05 13:23:25,004 (Annotator) Received response irrelevant
+2018-03-05 13:23:25,016 (Annotator) Sending tweet for annotation. Id: 970573920930881538evaluation: True
+2018-03-05 13:23:30,642 (DummyThread-1) Received: tweet_relevant
+2018-03-05 13:23:30,645 (Annotator) Received response relevant
+2018-03-05 13:23:30,657 (Annotator) Sending tweet for annotation. Id: 970573922579243008evaluation: True
+2018-03-05 13:23:30,668 (Trainer) Training new model (version 7)
+2018-03-05 13:23:31,519 (Classifier) Received new model (version 7)
+2018-03-05 13:25:45,694 (MainThread) 
+
+
+
+
+
+2018-03-05 13:25:45,694 (MainThread) **********ACTIVE LEARNING**********
+2018-03-05 13:25:45,694 (MainThread) Starting Application...
+2018-03-05 13:25:48,088 (MainThread) Starting Streamer...
+2018-03-05 13:25:48,088 (MainThread) **********THREAD STARTING**********
+2018-03-05 13:25:48,088 (Streamer) Ready!
+2018-03-05 13:25:48,088 (MainThread) Starting Text Processor...
+2018-03-05 13:25:48,088 (MainThread) **********THREAD STARTING**********
+2018-03-05 13:25:48,088 (Text Processor) Ready!
+2018-03-05 13:25:48,088 (MainThread) Starting Monitor...
+2018-03-05 13:25:48,088 (MainThread) **********THREAD STARTING**********
+2018-03-05 13:25:48,088 (Monitor) Ready!
+2018-03-05 13:25:48,089 (MainThread) Starting Classifier...
+2018-03-05 13:25:48,089 (MainThread) **********THREAD STARTING**********
+2018-03-05 13:25:48,089 (Classifier) Ready!
+2018-03-05 13:25:48,089 (MainThread) Starting Trainer...
+2018-03-05 13:25:48,089 (MainThread) **********THREAD STARTING**********
+2018-03-05 13:25:48,089 (Trainer) Ready!
+2018-03-05 13:25:59,418 (Streamer) Leaving stream
+2018-03-05 13:26:00,121 (Text Processor) Stopped
+2018-03-05 13:26:00,284 (Monitor) Stopped
+2018-03-05 13:26:00,284 (MainThread) Received stoprequest

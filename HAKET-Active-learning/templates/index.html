@@ -1,0 +1,30 @@
+{% include "base.html" %}
+
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='js/real_time_series.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+
+<div class="row" style="margin-top: 30px;margin-left: 10px;">
+          <div class="col-lg-4">
+              <div class="panel panel-default">
+                  <div class="panel-heading" style="background-color:#337ab7;color:white;font-size:25px;text-align: center;padding: 5px 5px 5px 5px;">Human labeling</div>
+                  <div class="panel-body full overflow">
+
+                      <div id="tweet_container">
+                          <p id="placeholder" style="font-size:25px;">Waiting for tweets...</p>
+                      </div>
+                  </div>
+                  <div class="panel-footer">
+                      <div class="btn-group">
+                          <button id="relevant" type="button" class="btn btn-success">relevant</button>
+                          <button id="irrelevant" type="button" class="btn btn-danger">irrelevant</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+</div>
+
+
+
+{% block body %}{% endblock %}

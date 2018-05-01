@@ -1,0 +1,74 @@
+.full {
+  min-height: 70vh;
+  max-height: 70vh;
+}
+.half {
+  min-height: 35vh;
+  max-height: 35vh;
+}
+.overflow {
+  overflow-y: scroll;
+}
+
+.text_holder {
+    display: block;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+.huge {
+  font-size: 35px;
+  text-align: right;
+}
+.bigger {
+  font-size: 17px;
+  text-align: left;
+}
+.green {
+    color: green;
+}
+.red {
+    color: green;
+}
+
+.graph .axis {
+    stroke-width: 1;
+}
+
+.graph .axis .tick line {
+    stroke-width: 1;
+    stroke: black;
+}
+
+.graph .axis .tick text {
+    fill: black;
+    font-size: 0.7em;
+}
+
+.graph .axis .domain {
+    fill: none;
+    stroke: black;
+}
+
+.graph .group {
+    fill: none;
+    stroke: black;
+    stroke-width: 1.5;
+}
+
+.graph {
+    padding: 10px;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #b3e6ff; /* Blue */
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
