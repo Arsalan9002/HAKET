@@ -16,14 +16,13 @@ import pandas as pd
 
 # sys.path.append('active_stream/')
 # os.chdir('/Users/Shehroz/Desktop/active_stream-master/active_stream')
-from classes.streaming import Streamer, Listener
-from classes.annotation import Annotator
-from classes.credentials import credentials
-from classes.text_processing import TextProcessor
-from classes.monitor import Monitor
-from classes.classification import Classifier, Trainer
-from classes.ModelTest import Modeling
-
+from streaming import Streamer, Listener
+from annotation import Annotator
+from credentials import credentials
+from text_processing import TextProcessor
+from monitor import Monitor
+from classification import Classifier, Trainer
+from ModelTest import Modeling
 
 async_mode = None
 app = Flask(__name__)
@@ -35,14 +34,13 @@ thread = None
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', async_mode=socketio.async_mode)
+
+    return render_template('index.html', async_mode=socketio.async_mode,submission1=False,clusters=None)
 
 @socketio.on('connect')
 def connected():
     logging.info('Received connect request')
     emit('log', {'data': 'Connected'})
-    global annotator
-    annotator.start()
 
 @socketio.on('tweet_relevant')
 def tweet_relevant():
@@ -65,18 +63,18 @@ def tweet_irrelevant():
     logging.debug('Received skip')
     data['queues']['annotation_response'].put('skip')
 
-# @socketio.on('connect')
-# def test_connect():
-#     global annotator
-#     if annotator.is_alive():
-#         # annotator.resume()
-#         logging.debug('Annotator already alive. Refreshing')
-#         emit('keywords', {'keywords': list(streamer.keywords)})
-#         annotator.first = True
-#     else:
-#         logging.info('Starting Annotator.')
-#         emit('keywords', {'keywords': list(streamer.keywords)})
-#         annotator.start()
+@socketio.on('connect')
+def test_connect():
+    global annotator
+    if annotator.is_alive():
+        # annotator.resume()
+        logging.debug('Annotator already alive. Refreshing')
+        emit('keywords', {'keywords': list(streamer.keywords)})
+        annotator.first = True
+    else:
+        logging.info('Starting Annotator.')
+        emit('keywords', {'keywords': list(streamer.keywords)})
+        annotator.start()
 
 @socketio.on('disconnect')
 def test_disconnect():
@@ -113,14 +111,17 @@ def remove_keyword(message):
 #
 #     return render_template('result.html',tweets_array=x)
 
-@socketio.on('result_show')
+# @socketio.on('result_show')
+@app.route('/resulter', methods = ['GET','POST'])
 def Results():
     # global streamer
     # streamer.pause()
     global annotator
     annotator.join
 
-    client = MongoClient('localhost', 27017)
+    # client = MongoClient('localhost', 27017)
+    uri = "mongodb+srv://%s:%s@%s" % ("HAKET", "HAKETBS", "haket-du1us.mongodb.net")
+    client = MongoClient(uri)
     db = client.HAKET_stream
     collection = db.data
     print('************////////////////////////////***************')
@@ -151,11 +152,13 @@ def Results():
 
 
     print(realclusters)
-
+    submission1 = True
+    print('////////////////////////////********ENDING*******////////////////////////////////')
+    print('////////////////////////////********ENDING*******////////////////////////////////')
+    print('////////////////////////////********ENDING*******////////////////////////////////')
+    print('////////////////////////////********ENDING*******////////////////////////////////')
     #return render_template("result.html", clusters=realclusters)
-    #return render_template("result.html", clusters=realclusters)
-    #emit('redirect', {'url': url_for('result.html')})
-
+    return render_template("result.html", clusters=realclusters)
 
 
 if __name__ == '__main__':
@@ -165,10 +168,11 @@ if __name__ == '__main__':
     collection = 'data'
     filters = {'languages': ['en'], 'locations': []}
     n_before_train = 1
-
+    # client = MongoClient("mongodb://ian:secretPassword@123.45.67.89/")  # defaults to port 27017
+    uri = "mongodb+srv://%s:%s@%s" % ("HAKET", "HAKETBS", "haket-du1us.mongodb.net")
 
     data = {
-            'database': MongoClient()[db][collection],
+            'database': MongoClient(uri)[db][collection],
             'queues': {
                 'text_processing': queue.Queue(BUF_SIZE),
                 'model': queue.Queue(1),
@@ -235,4 +239,3 @@ if __name__ == '__main__':
             t.join()
         logging.info('Done')
         sys.exit('Main thread stopped by user.')
-
