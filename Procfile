@@ -1,1 +1,1 @@
-web: chmod a+x start.sh && ./start.sh && python app.py
+web: chmod a+x start.sh && ./start.sh && gunicorn app:app
