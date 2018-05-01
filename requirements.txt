@@ -33,6 +33,7 @@ pathlib==1.0.1
 plac==0.9.6
 preshed==1.0.0
 pycparser==2.18
+pyldavis==2.1.1
 pymongo==3.6.0
 pyOpenSSL==17.5.0
 PySocks==1.6.7
