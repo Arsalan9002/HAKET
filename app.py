@@ -156,8 +156,8 @@ def Results():
 
 
 
-
-if __name__ == '__main__':
+@app.before_first_request
+def main():
 
     BUF_SIZE = 1000
     db = 'HAKET_stream'
@@ -235,3 +235,6 @@ if __name__ == '__main__':
         logging.info('Done')
         sys.exit('Main thread stopped by user.')
 
+
+if __name__ == '__main__':
+    main()
