@@ -66,6 +66,8 @@ def tweet_irrelevant():
 @socketio.on('connect')
 def test_connect():
     global annotator
+    if not annotator:
+        time.sleep(10)
     if annotator.is_alive():
         # annotator.resume()
         logging.debug('Annotator already alive. Refreshing')
