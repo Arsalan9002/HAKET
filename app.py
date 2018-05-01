@@ -210,6 +210,7 @@ if __name__ == '__main__':
     streamer = Streamer(credentials=credentials['coll_1'], data=data)
 
     text_processor = TextProcessor(data)
+    global annotator
     annotator = Annotator(train_threshold=n_before_train, data=data)
     classifier = Classifier(data)
     monitor = Monitor(streamer=streamer, classifier=classifier,
