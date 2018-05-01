@@ -9,9 +9,9 @@ import pandas as pd
 from nltk import word_tokenize
 # from nltk.corpus import stopwords
 import re
-import pyLDAvis
+# import pyLDAvis
 from pymongo import MongoClient
-import pyLDAvis.sklearn
+# import pyLDAvis.sklearn
 from sklearn.model_selection import GridSearchCV
 # import matplotlib.pyplot as plt
 # from sklearn.manifold import MDS
@@ -65,24 +65,24 @@ class Modeling:
             print("\n###########################################")
 
 
-
-    def plot_dendrogram(self, model, **kwargs):
-
-        # Children of hierarchical clustering
-        children = model.children_
-
-        # Distances between each pair of children
-        # Since we don't have this information, we can use a uniform one for plotting
-        distance = np.arange(children.shape[0])
-
-        # The number of observations contained in each cluster level
-        no_of_observations = np.arange(2, children.shape[0] + 2)
-
-        # Create linkage matrix and then plot the dendrogram
-        linkage_matrix = np.column_stack([children, distance, no_of_observations]).astype(float)
-
-        # Plot the corresponding dendrogram
-        dendrogram(linkage_matrix, **kwargs)
+    #
+    # def plot_dendrogram(self, model, **kwargs):
+    #
+    #     # Children of hierarchical clustering
+    #     children = model.children_
+    #
+    #     # Distances between each pair of children
+    #     # Since we don't have this information, we can use a uniform one for plotting
+    #     distance = np.arange(children.shape[0])
+    #
+    #     # The number of observations contained in each cluster level
+    #     no_of_observations = np.arange(2, children.shape[0] + 2)
+    #
+    #     # Create linkage matrix and then plot the dendrogram
+    #     linkage_matrix = np.column_stack([children, distance, no_of_observations]).astype(float)
+    #
+    #     # Plot the corresponding dendrogram
+    #     dendrogram(linkage_matrix, **kwargs)
 
 
     def run_model(self, documents):
