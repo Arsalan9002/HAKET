@@ -1,1 +1,1 @@
-web: python -m spacy download en && python app.py
+web: chmod a+x start.sh && ./start.sh
