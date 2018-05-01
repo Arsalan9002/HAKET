@@ -29,6 +29,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode, logger=False)
 thread = None
+streamer = None
+
+text_processor = None
+annotator = None
+classifier = None
+monitor = None
+trainer = None
 
 
 
