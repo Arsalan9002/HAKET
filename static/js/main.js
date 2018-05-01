@@ -143,7 +143,7 @@ $(document).ready(function() {
     $("button#skip").on('click', function() {
         socket.emit("skip");
     });
-    $("button#refresh").on('click', function() {
+    $("button#x").on('click', function() {
         socket.emit("refresh");
     });
     $("#discon").on('click', function() {

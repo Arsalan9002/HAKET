@@ -1,0 +1,4 @@
+{
+  "app.py::test_connect": true,
+  "app.py::test_disconnect": true
+}

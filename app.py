@@ -16,17 +16,13 @@ import pandas as pd
 
 # sys.path.append('active_stream/')
 # os.chdir('/Users/Shehroz/Desktop/active_stream-master/active_stream')
-from .streaming import Streamer, Listener
-from .annotation import Annotator
-from .credentials import credentials
-from .text_processing import TextProcessor
-from .monitor import Monitor
-from .classification import Classifier, Trainer
-from .ModelTest import Modeling
-import numpy as np
-import warnings
-
-warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning)
+from streaming import Streamer, Listener
+from annotation import Annotator
+from credentials import credentials
+from text_processing import TextProcessor
+from monitor import Monitor
+from classification import Classifier, Trainer
+from ModelTest import Modeling
 
 async_mode = None
 app = Flask(__name__)
@@ -121,11 +117,12 @@ def Results():
     global annotator
     annotator.join
 
+    # client = MongoClient('localhost', 27017)
     uri = "mongodb+srv://%s:%s@%s" % ("HAKET", "HAKETBS", "haket-du1us.mongodb.net")
-    client = MongoClient(uri)  # defaults to port 27017
+    client = MongoClient(uri)
     db = client.HAKET_stream
     collection = db.data
-    logging.debug('************////////////////////////////***************')
+    print('************////////////////////////////***************')
     # mongobatchupdate()
 
     x = collection.find({'classifier_relevant': True})
