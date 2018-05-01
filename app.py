@@ -29,7 +29,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode='gevent', logger=False)
 thread = None
-
+annotator = None
 
 
 @app.route('/', methods=['GET', 'POST'])
