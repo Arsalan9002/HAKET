@@ -12,7 +12,6 @@ class TextProcessor(threading.Thread):
 
     def __init__(self, data):
         super(TextProcessor, self).__init__(name='Text Processor')
-        # self.parser = spacy.load('en')
         self.parser = en_core_web_sm.load()
         self.tp_queue = data['queues']['text_processing']
         self.database = data['database']
