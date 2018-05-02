@@ -2,4 +2,4 @@
 
 # Start Gunicorn processes
 echo Starting APP.
-exec gunicorn --worker-class eventlet -w 1 module:app
+exec gunicorn -k gevent -w 1 app:app
