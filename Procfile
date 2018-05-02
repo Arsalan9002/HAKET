@@ -1,1 +1,1 @@
-web: chmod a+x start.sh && ./start.sh && gunicorn app:app
+web: gunicorn --worker-class eventlet -w 1 module:app

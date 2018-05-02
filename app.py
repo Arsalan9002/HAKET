@@ -1,4 +1,6 @@
-from gevent import monkey; monkey.patch_all()
+import eventlet
+# from gevent import monkey; monkey.patch_all()
+
 import queue 
 import logging
 import sys
@@ -24,13 +26,88 @@ from monitor import Monitor
 from classification import Classifier, Trainer
 from ModelTest import Modeling
 
-async_mode = 'gevent'
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app, async_mode='gevent', logger=False)
+socketio = SocketIO(app, logger=False)
 thread = None
+BUF_SIZE = 1000
+db = 'HAKET_stream'
+collection = 'data'
+filters = {'languages': ['en'], 'locations': []}
+n_before_train = 1
+# client = MongoClient("mongodb://ian:secretPassword@123.45.67.89/")  # defaults to port 27017
+uri = "mongodb+srv://%s:%s@%s" % ("HAKET", "HAKETBS", "haket-du1us.mongodb.net")
+
+data = {
+    'database': MongoClient(uri)[db][collection],
+    'queues': {
+        'text_processing': queue.Queue(BUF_SIZE),
+        'model': queue.Queue(1),
+        'annotation_response': queue.Queue(1),
+        'most_important_features': queue.Queue(1),
+        'keywords': queue.Queue(BUF_SIZE),
+        'limit': queue.Queue(BUF_SIZE),
+        'messages': queue.Queue(BUF_SIZE)
+    },
+    'dictionary': corpora.Dictionary(),
+    'events': {
+        'train_model': threading.Event()
+    },
+    'filters': filters,
+    'socket': socketio,
+}
+
+if __name__ == '__main__':
 
 
+
+    data['database'].drop()
+
+    logging.basicConfig(level=logging.DEBUG,
+                        format=''  # '%(asctime)s (%(threadName)s) %(message)s',
+                        # filename='debug.log'
+                        )
+
+    logging.info('\n' * 5)
+    logging.info('*' * 10 + 'ACTIVE LEARNING' + '*' * 10)
+    logging.info('Starting Application...')
+
+    # Initialize Threads
+
+    streamer = Streamer(credentials=credentials['coll_1'], data=data)
+
+    text_processor = TextProcessor(data)
+    # global annotator
+    annotator = Annotator(train_threshold=n_before_train, data=data)
+    classifier = Classifier(data)
+    monitor = Monitor(streamer=streamer, classifier=classifier,
+                      annotator=annotator, data=data)
+    trainer = Trainer(data=data, streamer=streamer,
+                      clf=SGDClassifier(loss='log', penalty='elasticnet'))
+
+    threads = [streamer, text_processor, monitor, classifier, trainer, annotator]
+    check = True
+
+    for t in threads:
+        logging.info('Starting {t.name}...')
+        logging.info('*' * 10 + 'THREAD STARTING' + '*' * 10)
+        if (t.isAlive() == False):
+            t.start()
+        else:
+            t.resume()
+    # startproject(threads, app)
+    try:
+        # logging.info('Starting interface...')
+        socketio.run(app, debug=False, log_output=False)
+    except KeyboardInterrupt:
+        # logging.info('Keyboard Interrupt. Sending stoprequest to all threads')
+        annotator.join()
+        for t in threads:
+            logging.debug('Sending stoprequest to ', {t.name})
+            t.join()
+        logging.info('Done')
+        sys.exit('Main thread stopped by user.')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -67,12 +144,18 @@ def tweet_irrelevant():
 @socketio.on('connect')
 def test_connect():
     global annotator
-    if annotator.is_alive():
-        # annotator.resume()
-        logging.debug('Annotator already alive. Refreshing')
-        emit('keywords', {'keywords': list(streamer.keywords)})
-        annotator.first = True
+    if annotator:
+        if annotator.is_alive():
+            # annotator.resume()
+            logging.debug('Annotator already alive. Refreshing')
+            emit('keywords', {'keywords': list(streamer.keywords)})
+            annotator.first = True
+        else:
+            logging.info('Starting Annotator.')
+            emit('keywords', {'keywords': list(streamer.keywords)})
+            annotator.start()
     else:
+        annotator = Annotator(train_threshold=n_before_train, data=data)
         logging.info('Starting Annotator.')
         emit('keywords', {'keywords': list(streamer.keywords)})
         annotator.start()
@@ -162,77 +245,5 @@ def Results():
     return render_template("result.html", clusters=realclusters)
 
 
-if __name__ == '__main__':
-    BUF_SIZE = 1000
-    db = 'HAKET_stream'
-    collection = 'data'
-    filters = {'languages': ['en'], 'locations': []}
-    n_before_train = 1
-    # client = MongoClient("mongodb://ian:secretPassword@123.45.67.89/")  # defaults to port 27017
-    uri = "mongodb+srv://%s:%s@%s" % ("HAKET", "HAKETBS", "haket-du1us.mongodb.net")
-
-    data = {
-        'database': MongoClient(uri)[db][collection],
-        'queues': {
-            'text_processing': queue.Queue(BUF_SIZE),
-            'model': queue.Queue(1),
-            'annotation_response': queue.Queue(1),
-            'most_important_features': queue.Queue(1),
-            'keywords': queue.Queue(BUF_SIZE),
-            'limit': queue.Queue(BUF_SIZE),
-            'messages': queue.Queue(BUF_SIZE)
-        },
-        'dictionary': corpora.Dictionary(),
-        'events': {
-            'train_model': threading.Event()
-        },
-        'filters': filters,
-        'socket': socketio,
-    }
-
-    data['database'].drop()
-
-    logging.basicConfig(level=logging.DEBUG,
-                        format=''  # '%(asctime)s (%(threadName)s) %(message)s',
-                        # filename='debug.log'
-                        )
-
-    logging.info('\n' * 5)
-    logging.info('*' * 10 + 'ACTIVE LEARNING' + '*' * 10)
-    logging.info('Starting Application...')
-
-    # Initialize Threads
-
-    streamer = Streamer(credentials=credentials['coll_1'], data=data)
-
-    text_processor = TextProcessor(data)
-    # global annotator
-    annotator = Annotator(train_threshold=n_before_train, data=data)
-    classifier = Classifier(data)
-    monitor = Monitor(streamer=streamer, classifier=classifier,
-                      annotator=annotator, data=data)
-    trainer = Trainer(data=data, streamer=streamer,
-                      clf=SGDClassifier(loss='log', penalty='elasticnet'))
-
-    threads = [streamer, text_processor, monitor, classifier, trainer, annotator]
-    check = True
-
-    for t in threads:
-        logging.info('Starting {t.name}...')
-        logging.info('*' * 10 + 'THREAD STARTING' + '*' * 10)
-        if (t.isAlive() == False):
-            t.start()
-        else:
-            t.resume()
-    # startproject(threads, app)
-    try:
-        # logging.info('Starting interface...')
-        socketio.run(app, debug=False, log_output=False)
-    except KeyboardInterrupt:
-        # logging.info('Keyboard Interrupt. Sending stoprequest to all threads')
-        annotator.join()
-        for t in threads:
-            logging.debug('Sending stoprequest to ',{t.name})
-            t.join()
-        logging.info('Done')
-        sys.exit('Main thread stopped by user.')
+# if __name__ == '__main__':
+#
