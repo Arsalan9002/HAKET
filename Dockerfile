@@ -5,7 +5,6 @@ FROM python:3-onbuild
 EXPOSE 8000
 EXPOSE 5000
 
-RUN ["chmod", "+x", "/start.sh"]
 RUN ["python", "-m", "spacy", "download", "en"]
 # CMD specifcies the command to execute to start the server running.
 CMD ["gunicorn", "-k", "gevent", "-w", "1", "app:app"]
