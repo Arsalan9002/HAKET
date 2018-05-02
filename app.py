@@ -32,6 +32,7 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, logger=False)
 thread = None
 annotator = None
+streamer = None
 BUF_SIZE = 1000
 db = 'HAKET_stream'
 collection = 'data'
@@ -145,6 +146,10 @@ def tweet_irrelevant():
 @socketio.on('connect')
 def test_connect():
     global annotator
+    global streamer
+    if streamer is None:
+        streamer = Streamer(credentials=credentials['coll_1'], data=data)
+        streamer.start()
     if annotator is not None:
         if annotator.is_alive():
             # annotator.resume()
