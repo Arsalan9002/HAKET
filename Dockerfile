@@ -11,4 +11,5 @@ RUN ["chmod", "+x", "/start.sh"]
 RUN ["python", "-m", "spacy", "download", "en"]
 # CMD specifcies the command to execute to start the server running.
 CMD ["/start.sh"]
+
 # done!
