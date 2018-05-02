@@ -31,6 +31,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, logger=False)
 thread = None
+annotator = None
 BUF_SIZE = 1000
 db = 'HAKET_stream'
 collection = 'data'
@@ -144,7 +145,7 @@ def tweet_irrelevant():
 @socketio.on('connect')
 def test_connect():
     global annotator
-    if annotator:
+    if annotator not None:
         if annotator.is_alive():
             # annotator.resume()
             logging.debug('Annotator already alive. Refreshing')

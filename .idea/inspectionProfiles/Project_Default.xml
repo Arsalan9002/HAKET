@@ -4,7 +4,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="32">
+          <list size="33">
             <item index="0" class="java.lang.String" itemvalue="MarkupSafe" />
             <item index="1" class="java.lang.String" itemvalue="gensim" />
             <item index="2" class="java.lang.String" itemvalue="tweepy" />
@@ -37,6 +37,7 @@
             <item index="29" class="java.lang.String" itemvalue="thinc" />
             <item index="30" class="java.lang.String" itemvalue="pytz" />
             <item index="31" class="java.lang.String" itemvalue="idna" />
+            <item index="32" class="java.lang.String" itemvalue="en-core-web-sm" />
           </list>
         </value>
       </option>
