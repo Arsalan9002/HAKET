@@ -223,12 +223,12 @@ def Results():
 
     realclusters = []
     for i in clus:
-        cluster = df[df.cluster ==i]
+        cluster = df[df.cluster == i].id.tolist()
         # print(i)
         realclusters.append(cluster)
 
 
-    print(realclusters)
+    # print(realclusters)
     submission1 = True
     print('////////////////////////////********ENDING*******////////////////////////////////')
     print('////////////////////////////********ENDING*******////////////////////////////////')
