@@ -30,7 +30,7 @@ from ModelTest import Modeling
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, logger=False)
-thread = None
+threads = []
 annotator = None
 streamer = None
 BUF_SIZE = 1000
@@ -76,18 +76,18 @@ if __name__ == '__main__':
     logging.info('Starting Application...')
 
     # Initialize Threads
-
+    global streamer
     streamer = Streamer(credentials=credentials['coll_1'], data=data)
 
     text_processor = TextProcessor(data)
-    # global annotator
+    global annotator
     annotator = Annotator(train_threshold=n_before_train, data=data)
     classifier = Classifier(data)
     monitor = Monitor(streamer=streamer, classifier=classifier,
                       annotator=annotator, data=data)
     trainer = Trainer(data=data, streamer=streamer,
                       clf=SGDClassifier(loss='log', penalty='elasticnet'))
-
+    global threads
     threads = [streamer, text_processor, monitor, classifier, trainer, annotator]
     check = True
 
@@ -147,24 +147,24 @@ def tweet_irrelevant():
 def test_connect():
     global annotator
     global streamer
-    if streamer is None:
-        streamer = Streamer(credentials=credentials['coll_1'], data=data)
-        streamer.start()
-    if annotator is not None:
-        if annotator.is_alive():
-            # annotator.resume()
-            logging.debug('Annotator already alive. Refreshing')
-            emit('keywords', {'keywords': list(streamer.keywords)})
-            annotator.first = True
-        else:
-            logging.info('Starting Annotator.')
-            emit('keywords', {'keywords': list(streamer.keywords)})
-            annotator.start()
+    # if streamer is None:
+    #     streamer = Streamer(credentials=credentials['coll_1'], data=data)
+    #     streamer.start()
+    # if annotator is not None:
+    if annotator.is_alive():
+        # annotator.resume()
+        logging.debug('Annotator already alive. Refreshing')
+        emit('keywords', {'keywords': list(streamer.keywords)})
+        annotator.first = True
     else:
-        annotator = Annotator(train_threshold=n_before_train, data=data)
         logging.info('Starting Annotator.')
         emit('keywords', {'keywords': list(streamer.keywords)})
         annotator.start()
+    # else:
+    #     annotator = Annotator(train_threshold=n_before_train, data=data)
+    #     logging.info('Starting Annotator.')
+    #     emit('keywords', {'keywords': list(streamer.keywords)})
+    #     annotator.start()
 
 @socketio.on('disconnect')
 def test_disconnect():
