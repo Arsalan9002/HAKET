@@ -168,8 +168,6 @@ class Modeling:
         # plt.xlabel('Component 1')
         # plt.title("Segregation of Topic Clusters", )
         # plt.show()
-        with open('testout.csv', 'w') as f:
-            documents.to_csv(f, encoding='UTF-8')
         # print("Top terms per cluster:")
         # km.
         # order_centroids = km.cluster_centers_.argsort()[:, ::-1]

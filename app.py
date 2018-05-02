@@ -1,5 +1,5 @@
-import eventlet
-# from gevent import monkey; monkey.patch_all()
+from gevent import monkey
+monkey.patch_all()
 
 import queue 
 import logging
@@ -18,6 +18,7 @@ import pandas as pd
 
 # sys.path.append('active_stream/')
 # os.chdir('/Users/Shehroz/Desktop/active_stream-master/active_stream')
+sys.path.append('classes/')
 from streaming import Streamer, Listener
 from annotation import Annotator
 from credentials import credentials
@@ -26,13 +27,13 @@ from monitor import Monitor
 from classification import Classifier, Trainer
 from ModelTest import Modeling
 
-
+async_mode = 'gevent'
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app, logger=False)
+socketio = SocketIO(app, async_mode='gevent', logger=False)
 threads = []
-annotator = None
-streamer = None
+# annotator = None
+# streamer = None
 BUF_SIZE = 1000
 db = 'HAKET_stream'
 collection = 'data'
@@ -59,57 +60,8 @@ data = {
     'filters': filters,
     'socket': socketio,
 }
-
-if __name__ == '__main__':
-
-
-
-    data['database'].drop()
-
-    logging.basicConfig(level=logging.DEBUG,
-                        format=''  # '%(asctime)s (%(threadName)s) %(message)s',
-                        # filename='debug.log'
-                        )
-
-    logging.info('\n' * 5)
-    logging.info('*' * 10 + 'ACTIVE LEARNING' + '*' * 10)
-    logging.info('Starting Application...')
-
-    # Initialize Threads
-    # global streamer
-    streamer = Streamer(credentials=credentials['coll_1'], data=data)
-
-    text_processor = TextProcessor(data)
-    # global annotator
-    annotator = Annotator(train_threshold=n_before_train, data=data)
-    classifier = Classifier(data)
-    monitor = Monitor(streamer=streamer, classifier=classifier,
-                      annotator=annotator, data=data)
-    trainer = Trainer(data=data, streamer=streamer,
-                      clf=SGDClassifier(loss='log', penalty='elasticnet'))
-    # global threads
-    threads = [streamer, text_processor, monitor, classifier, trainer, annotator]
-    check = True
-
-    for t in threads:
-        logging.info('Starting {t.name}...')
-        logging.info('*' * 10 + 'THREAD STARTING' + '*' * 10)
-        if (t.isAlive() == False):
-            t.start()
-        else:
-            t.resume()
-    # startproject(threads, app)
-    try:
-        # logging.info('Starting interface...')
-        socketio.run(app, debug=False, log_output=False)
-    except KeyboardInterrupt:
-        # logging.info('Keyboard Interrupt. Sending stoprequest to all threads')
-        annotator.join()
-        for t in threads:
-            logging.debug('Sending stoprequest to ', {t.name})
-            t.join()
-        logging.info('Done')
-        sys.exit('Main thread stopped by user.')
+annotator = None
+streamer = None
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -117,10 +69,10 @@ def index():
 
     return render_template('index.html', async_mode=socketio.async_mode,submission1=False,clusters=None)
 
-@socketio.on('connect')
-def connected():
-    logging.info('Received connect request')
-    emit('log', {'data': 'Connected'})
+# @socketio.on('connect')
+# def connected():
+#     logging.info('Received connect request')
+#     emit('log', {'data': 'Connected'})
 
 @socketio.on('tweet_relevant')
 def tweet_relevant():
@@ -147,6 +99,41 @@ def tweet_irrelevant():
 def test_connect():
     global annotator
     global streamer
+    if annotator is None or streamer is None:
+        data['database'].drop()
+
+        logging.basicConfig(level=logging.DEBUG,
+                            format=''   '%(asctime)s (%(threadName)s) %(message)s',
+                            filename='debug.log'
+                            )
+
+        logging.info('\n' * 5)
+        logging.info('*' * 10 + 'ACTIVE LEARNING' + '*' * 10)
+        logging.info('Starting Application...')
+
+        # Initialize Threads
+        # global streamer
+        streamer = Streamer(credentials=credentials['coll_1'], data=data)
+
+        text_processor = TextProcessor(data)
+        # global annotator
+        annotator = Annotator(train_threshold=n_before_train, data=data)
+        classifier = Classifier(data)
+        monitor = Monitor(streamer=streamer, classifier=classifier,
+                          annotator=annotator, data=data)
+        trainer = Trainer(data=data, streamer=streamer,
+                          clf=SGDClassifier(loss='log', penalty='elasticnet'))
+        # global threads
+        threads = [streamer, text_processor, monitor, classifier, trainer]
+        check = True
+
+        for t in threads:
+            logging.info('Starting {}...'.format(t.name))
+            logging.info('*' * 10 + 'THREAD STARTING' + '*' * 10)
+            if (t.isAlive() == False):
+                t.start()
+            else:
+                t.resume()
     # if streamer is None:
     #     streamer = Streamer(credentials=credentials['coll_1'], data=data)
     #     streamer.start()
@@ -251,5 +238,15 @@ def Results():
     return render_template("result.html", clusters=realclusters)
 
 
-# if __name__ == '__main__':
-#
+if __name__ == '__main__':
+    try:
+        # logging.info('Starting interface...')
+        socketio.run(app, debug=False, log_output=False)
+    except KeyboardInterrupt:
+        # logging.info('Keyboard Interrupt. Sending stoprequest to all threads')
+        annotator.join()
+        for t in threads:
+            logging.debug('Sending stoprequest to ', {t.name})
+            t.join()
+        logging.info('Done')
+        sys.exit('Main thread stopped by user.')

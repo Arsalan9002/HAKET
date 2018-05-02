@@ -1,6 +1,6 @@
 import threading
 import logging
-import spacy
+
 import queue
 import re
 import string
