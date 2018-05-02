@@ -76,18 +76,18 @@ if __name__ == '__main__':
     logging.info('Starting Application...')
 
     # Initialize Threads
-    global streamer
+    # global streamer
     streamer = Streamer(credentials=credentials['coll_1'], data=data)
 
     text_processor = TextProcessor(data)
-    global annotator
+    # global annotator
     annotator = Annotator(train_threshold=n_before_train, data=data)
     classifier = Classifier(data)
     monitor = Monitor(streamer=streamer, classifier=classifier,
                       annotator=annotator, data=data)
     trainer = Trainer(data=data, streamer=streamer,
                       clf=SGDClassifier(loss='log', penalty='elasticnet'))
-    global threads
+    # global threads
     threads = [streamer, text_processor, monitor, classifier, trainer, annotator]
     check = True
 
