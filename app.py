@@ -1,6 +1,4 @@
-from gevent import monkey
-monkey.patch_all()
-
+from gevent import monkey; monkey.patch_all()
 import queue 
 import logging
 import sys
@@ -18,7 +16,6 @@ import pandas as pd
 
 # sys.path.append('active_stream/')
 # os.chdir('/Users/Shehroz/Desktop/active_stream-master/active_stream')
-sys.path.append('classes/')
 from streaming import Streamer, Listener
 from annotation import Annotator
 from credentials import credentials
@@ -27,41 +24,12 @@ from monitor import Monitor
 from classification import Classifier, Trainer
 from ModelTest import Modeling
 
-async_mode = 'gevent'
+async_mode = None
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app, async_mode='gevent', logger=False)
-threads = []
-# annotator = None
-# streamer = None
-BUF_SIZE = 1000
-db = 'HAKET_stream'
-collection = 'data'
-filters = {'languages': ['en'], 'locations': []}
-n_before_train = 1
-# client = MongoClient("mongodb://ian:secretPassword@123.45.67.89/")  # defaults to port 27017
-uri = "mongodb+srv://%s:%s@%s" % ("HAKET", "HAKETBS", "haket-du1us.mongodb.net")
+socketio = SocketIO(app, async_mode=async_mode, logger=False)
+thread = None
 
-data = {
-    'database': MongoClient(uri)[db][collection],
-    'queues': {
-        'text_processing': queue.Queue(BUF_SIZE),
-        'model': queue.Queue(1),
-        'annotation_response': queue.Queue(1),
-        'most_important_features': queue.Queue(1),
-        'keywords': queue.Queue(BUF_SIZE),
-        'limit': queue.Queue(BUF_SIZE),
-        'messages': queue.Queue(BUF_SIZE)
-    },
-    'dictionary': corpora.Dictionary(),
-    'events': {
-        'train_model': threading.Event()
-    },
-    'filters': filters,
-    'socket': socketio,
-}
-annotator = None
-streamer = None
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -69,10 +37,10 @@ def index():
 
     return render_template('index.html', async_mode=socketio.async_mode,submission1=False,clusters=None)
 
-# @socketio.on('connect')
-# def connected():
-#     logging.info('Received connect request')
-#     emit('log', {'data': 'Connected'})
+@socketio.on('connect')
+def connected():
+    logging.info('Received connect request')
+    emit('log', {'data': 'Connected'})
 
 @socketio.on('tweet_relevant')
 def tweet_relevant():
@@ -98,46 +66,6 @@ def tweet_irrelevant():
 @socketio.on('connect')
 def test_connect():
     global annotator
-    global streamer
-    if annotator is None or streamer is None:
-        data['database'].drop()
-
-        logging.basicConfig(level=logging.DEBUG,
-                            format=''   '%(asctime)s (%(threadName)s) %(message)s',
-                            filename='debug.log'
-                            )
-
-        logging.info('\n' * 5)
-        logging.info('*' * 10 + 'ACTIVE LEARNING' + '*' * 10)
-        logging.info('Starting Application...')
-
-        # Initialize Threads
-        # global streamer
-        streamer = Streamer(credentials=credentials['coll_1'], data=data)
-
-        text_processor = TextProcessor(data)
-        # global annotator
-        annotator = Annotator(train_threshold=n_before_train, data=data)
-        classifier = Classifier(data)
-        monitor = Monitor(streamer=streamer, classifier=classifier,
-                          annotator=annotator, data=data)
-        trainer = Trainer(data=data, streamer=streamer,
-                          clf=SGDClassifier(loss='log', penalty='elasticnet'))
-        # global threads
-        threads = [streamer, text_processor, monitor, classifier, trainer]
-        check = True
-
-        for t in threads:
-            logging.info('Starting {}...'.format(t.name))
-            logging.info('*' * 10 + 'THREAD STARTING' + '*' * 10)
-            if (t.isAlive() == False):
-                t.start()
-            else:
-                t.resume()
-    # if streamer is None:
-    #     streamer = Streamer(credentials=credentials['coll_1'], data=data)
-    #     streamer.start()
-    # if annotator is not None:
     if annotator.is_alive():
         # annotator.resume()
         logging.debug('Annotator already alive. Refreshing')
@@ -147,11 +75,6 @@ def test_connect():
         logging.info('Starting Annotator.')
         emit('keywords', {'keywords': list(streamer.keywords)})
         annotator.start()
-    # else:
-    #     annotator = Annotator(train_threshold=n_before_train, data=data)
-    #     logging.info('Starting Annotator.')
-    #     emit('keywords', {'keywords': list(streamer.keywords)})
-    #     annotator.start()
 
 @socketio.on('disconnect')
 def test_disconnect():
@@ -220,16 +143,19 @@ def Results():
     clus = set(list(df.cluster))
     print(list(clus))
     clus = list(clus)
-
+    # print(df)
     realclusters = []
+    # cluster = {}
     for i in clus:
-        cluster = df[df.cluster == i].id.tolist()
-        # print(i)
-        realclusters.append(cluster)
+        twid = df[df.cluster == i].id.tolist()
+        body = df[df.cluster == i].text.tolist()
+        results = list(zip(twid, body))
+        realclusters.append(results)
 
-
-    # print(realclusters)
-    submission1 = True
+    # print(realclusters[0][0][0])
+    # for tweet in realclusters[0]:
+    #      print(tweet[0])
+    # submission1 = True
     print('////////////////////////////********ENDING*******////////////////////////////////')
     print('////////////////////////////********ENDING*******////////////////////////////////')
     print('////////////////////////////********ENDING*******////////////////////////////////')
@@ -239,6 +165,72 @@ def Results():
 
 
 if __name__ == '__main__':
+
+    BUF_SIZE = 1000
+    db = 'HAKET_stream'
+    collection = 'data'
+    filters = {'languages': ['en'], 'locations': []}
+    n_before_train = 1
+    # client = MongoClient("mongodb://ian:secretPassword@123.45.67.89/")  # defaults to port 27017
+    uri = "mongodb+srv://%s:%s@%s" % ("HAKET", "HAKETBS", "haket-du1us.mongodb.net")
+
+    data = {
+            'database': MongoClient(uri)[db][collection],
+            'queues': {
+                'text_processing': queue.Queue(BUF_SIZE),
+                'model': queue.Queue(1),
+                'annotation_response': queue.Queue(1),
+                'most_important_features': queue.Queue(1),
+                'keywords': queue.Queue(BUF_SIZE),
+                'limit': queue.Queue(BUF_SIZE),
+                'messages': queue.Queue(BUF_SIZE)
+                },
+            'dictionary': corpora.Dictionary(),
+            'events': {
+                'train_model': threading.Event()
+                },
+            'filters': filters,
+            'socket': socketio,
+            }
+
+
+    data['database'].drop()
+
+
+    logging.basicConfig(level=logging.DEBUG,
+                     format= ''#'%(asctime)s (%(threadName)s) %(message)s',
+                    # filename='debug.log'
+                    )
+
+
+    logging.info('\n'*5)
+    logging.info('*'*10 + 'ACTIVE LEARNING' + '*'*10)
+    logging.info('Starting Application...')
+
+
+    # Initialize Threads
+
+    streamer = Streamer(credentials=credentials['coll_1'], data=data)
+
+    text_processor = TextProcessor(data)
+    annotator = Annotator(train_threshold=n_before_train, data=data)
+    classifier = Classifier(data)
+    monitor = Monitor(streamer=streamer, classifier=classifier,
+                      annotator=annotator, data=data)
+    trainer = Trainer(data=data, streamer=streamer,
+                      clf=SGDClassifier(loss='log', penalty='elasticnet'))
+
+    threads = [streamer, text_processor, monitor, classifier, trainer]
+    check = True
+
+    for t in threads:
+        logging.info('Starting {t.name}...')
+        logging.info('*' * 10 + 'THREAD STARTING' + '*' * 10)
+        if (t.isAlive() == False):
+            t.start()
+        else:
+            t.resume()
+    # startproject(threads, app)
     try:
         # logging.info('Starting interface...')
         socketio.run(app, debug=False, log_output=False)
@@ -246,7 +238,7 @@ if __name__ == '__main__':
         # logging.info('Keyboard Interrupt. Sending stoprequest to all threads')
         annotator.join()
         for t in threads:
-            logging.debug('Sending stoprequest to ', {t.name})
+            logging.debug('Sending stoprequest to ',{t.name})
             t.join()
         logging.info('Done')
         sys.exit('Main thread stopped by user.')

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>HAKET</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+
+
+   <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/1.10.16/features/searchHighlight/dataTables.searchHighlight.css">
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.16/features/searchHighlight/dataTables.searchHighlight.min.js"></script>
+    <script type="text/javascript" src="//bartaz.github.io/sandbox.js/jquery.highlight.js"></script>
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+    <script sync src="https://platform.twitter.com/widgets.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loader.css') }}">
+    <script>
+        function loader(){
+            loader = setTimeout(showPage, 36000)
+        }
+        function showPage(){
+           document.getElementById("Loading").style.display = "none"
+        }
+        $.extend( true, $.fn.dataTable.defaults, {
+            "searching": true,
+            "ordering": true
+        } );
+         $(document).ready(function() {
+             $('#example1').DataTable({
+                 "lengthChange": false,
+                 "paging": true
+             });
+             $('#example2').DataTable({
+                 "lengthChange": false,
+                 "paging": true
+             });
+             $('#example3').DataTable({
+                 "lengthChange": false,
+                 "paging": true
+             });
+             $('#example4').DataTable({
+                 "lengthChange": false,
+                 "paging": true
+             });
+             $('#example5').DataTable({
+                 "lengthChange": false,
+                 "paging": true
+             });
+         });
+
+    </script>
+    <style>
+        @media (min-width: 1200px) {
+          .container-fluid {
+            width: 900px;
+          }
+        }
+        tr {
+           line-height: 10px;
+           min-height: 10px;
+           height: 10px;
+        }
+
+        .boxeffect{
+            box-shadow: 5px 10px #F5F5F5;
+        }
+    </style>
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg" style="background-color: #337ab7 !important;">
+  <a class="navbar-brand" href="#" style="color: white;font-size: 20px;" title="Human Augmented Knowledge Extraction Tool">HAKET</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse pull-right" id="navbarSupportedContent">
+
+
+
+
+
+                <!--<div class="class-sm-8" style="margin-left:40px;margin-top:30px;margin-bottom:0;">
+                    <div class="panel-body half overflow">
+                        <form id="main_input_box">
+                            <div class="pull-left">
+                                <input type="text" class ="form-control" id="custom_textbox" name="Item" autocomplete="off" placeholder="Enter new keyword here">
+                            </div>
+                            <div>
+                                <input type="submit" value="Add" class="btn btn-success">
+                            </div>
+                        </form>
+
+                        <div class="panel-footer">
+                            <div class="btn-group">
+                                <form action="/kuchbh_button" method="post">
+                                    <input type="submit" class="btn btn-primary" value="Show Results">
+                                </form>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>-->
+
+  </div>
+</nav>
+</body>
+</html>
