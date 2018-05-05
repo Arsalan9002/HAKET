@@ -85,7 +85,13 @@ trainer = Trainer(data=data, streamer=streamer,
 
 threads = [streamer, text_processor, monitor, classifier, trainer]
 check = True
-
+for t in threads:
+        logging.info('Starting {t.name}...')
+        logging.info('*' * 10 + 'THREAD STARTING' + '*' * 10)
+        if (t.isAlive() == False):
+            t.start()
+        else:
+            t.resume()
 
 
 
@@ -224,13 +230,7 @@ def Results():
 
 if __name__ == '__main__':
     
-    for t in threads:
-        logging.info('Starting {t.name}...')
-        logging.info('*' * 10 + 'THREAD STARTING' + '*' * 10)
-        if (t.isAlive() == False):
-            t.start()
-        else:
-            t.resume()
+    
     # startproject(threads, app)
     try:
         # logging.info('Starting interface...')
