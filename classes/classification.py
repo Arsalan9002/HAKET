@@ -4,6 +4,7 @@ import logging
 import numpy as np
 import queue
 import scipy.sparse
+from nltk.corpus import stopwords
 
 from time import sleep
 from gensim import matutils
@@ -42,7 +43,7 @@ class Classifier(threading.Thread):
         while not self.stoprequest.isSet():
 
             if not self.model_queue.empty():
-                logging.info(f'Received new model (version {self.clf_version})')
+                # logging.info(f'Received new model (version {self.clf_version})')
                 self.clf = self.model_queue.get()
                 self.clf_version += 1
                 to_classify = self.database.find({'manual_relevant': None})
@@ -145,7 +146,9 @@ class Trainer(threading.Thread):
         self.clf_version = 0
         self.message_queue = data['queues']['messages']
         self.streamer = streamer
-        self.mif_stopwords = set([' ', '-PRON-', '.', '-', ':', ';','&', 'amp'])
+        # self.mif_stopwords = set([' ', '-PRON-', '.', '-', ':', ';','&', 'amp','.','?',')','(','/',]+ stopwords.words('english'))
+        self.mif_stopwords = set(
+            [' ', '-PRON-', '.', '-', ':', ';', '&', 'amp' ] + stopwords.words('english'))
         self.paused = False
         self.pause_cond = threading.Condition(threading.Lock())
 
@@ -181,7 +184,7 @@ class Trainer(threading.Thread):
         self.mif_stopwords.update([x.lower() for x in self.streamer.keywords])
         for id_ in mif_indices:
             word = self.dictionary.id2token[id_]
-            if word not in self.mif_stopwords:
+            if word not in self.mif_stopwords and word.isalpha():
                 mif.append(word)
             else:
                 continue
@@ -200,7 +203,7 @@ class Trainer(threading.Thread):
         while not self.stoprequest.isSet():
         
             if self.trigger.isSet():
-                logging.info(f'Training new model (version {self.clf_version})')
+                # logging.info(f'Training new model (version {self.clf_version})')
                 self.message_queue.put("Training new model")
                 self.train_model()
                 self.trigger.clear()

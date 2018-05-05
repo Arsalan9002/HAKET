@@ -8,24 +8,6 @@ import numpy as np
 from time import sleep
 
 class Annotator(threading.Thread):
-    '''
-    Handles manual annotations.
-
-    Queries database for uncertain statuses, presents and presents them to the
-    user.     
-    
-    Arguments:
-    ---------------  
-    database: pymongo connection
-    train_event: threading event. To communicate with Trainer
-    train_threshold: int, number of annotations (for each class) before training
-        starts.
-    
-    Methods:
-    ---------------  
-    run
-
-    '''
 
     def __init__(self, data, train_threshold=1):
         super(Annotator, self).__init__(name='Annotator')
@@ -89,8 +71,8 @@ class Annotator(threading.Thread):
                         self.annotation_response.get()
                     id_ = str(status['id'])
                     guess = str(round(status['probability_relevant'], 3))
-                    logging.debug(f'Sending tweet for annotation. Id: {id_}'
-                                  f'evaluation: {eval_run}')
+                    # logging.debug(f'Sending tweet for annotation. Id: {id_}'
+                    #               f'evaluation: {eval_run}')
                     self.socket.emit('display_tweet', {'tweet_id': id_,
                                                        'guess': guess,
                                                        'eval': str(eval_run)})
@@ -98,12 +80,12 @@ class Annotator(threading.Thread):
                         p = round(status['probability_relevant'], 2)
                         self.message_queue.put('This is an evaluation Tweet '
                                                'I guess it is relevant with '
-                                               f'probability {p}')
+                                               'probability {0}'.format(p))
                 
                 while True:
                     try:
                         response = self.annotation_response.get(timeout=0.1)
-                        logging.debug(f'Received response {response}')
+                        # logging.debug(f'Received response {response}')
                         break
                     except queue.Empty as e:
                         continue
