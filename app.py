@@ -223,8 +223,7 @@ def Results():
 
 
 if __name__ == '__main__':
-    global annotator
-    global threads
+    
     for t in threads:
         logging.info('Starting {t.name}...')
         logging.info('*' * 10 + 'THREAD STARTING' + '*' * 10)
