@@ -41,8 +41,8 @@ class Listener(tweepy.StreamListener):
             return True
 
     def on_error(self, status):
-        logging.error(f'Received error message from API: {status}')
-        self.message_queue.put(f'Received error message form Twitter API: {status}')
+        # logging.error(f'Received error message from API: {status}')
+        self.message_queue.put('Received error message form Twitter API: {0}'.format(status))
         return False
 
 
@@ -92,7 +92,7 @@ class Streamer(threading.Thread):
             time.sleep(0.05)
 
             if len(self.keywords) > 0:
-                logging.info(f'Tracking: {self.keywords}')
+                # logging.info(f'Tracking: {self.keywords}')
                 lis = Listener(self.stoprequest, self.data)
                 self.last_connection = time.time()
                 stream = tweepy.Stream(auth=self.auth, listener=lis)

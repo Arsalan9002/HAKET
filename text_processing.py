@@ -4,7 +4,7 @@ import spacy
 import queue
 import re
 import string
-import en_core_web_sm
+
 from urllib.parse import urlparse
 
 class TextProcessor(threading.Thread):
@@ -12,7 +12,7 @@ class TextProcessor(threading.Thread):
 
     def __init__(self, data):
         super(TextProcessor, self).__init__(name='Text Processor')
-        self.parser = en_core_web_sm.load()
+        self.parser = spacy.load('en')
         self.tp_queue = data['queues']['text_processing']
         self.database = data['database']
         self.stoprequest = threading.Event()

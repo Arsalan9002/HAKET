@@ -43,7 +43,7 @@ class Classifier(threading.Thread):
         while not self.stoprequest.isSet():
 
             if not self.model_queue.empty():
-                logging.info(f'Received new model (version {self.clf_version})')
+                # logging.info(f'Received new model (version {self.clf_version})')
                 self.clf = self.model_queue.get()
                 self.clf_version += 1
                 to_classify = self.database.find({'manual_relevant': None})
@@ -203,7 +203,7 @@ class Trainer(threading.Thread):
         while not self.stoprequest.isSet():
         
             if self.trigger.isSet():
-                logging.info(f'Training new model (version {self.clf_version})')
+                # logging.info(f'Training new model (version {self.clf_version})')
                 self.message_queue.put("Training new model")
                 self.train_model()
                 self.trigger.clear()

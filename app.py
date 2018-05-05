@@ -39,28 +39,28 @@ def index():
 
 @socketio.on('connect')
 def connected():
-    logging.info('Received connect request')
+    # logging.info('Received connect request')
     emit('log', {'data': 'Connected'})
 
 @socketio.on('tweet_relevant')
 def tweet_relevant():
-    logging.debug('Received: tweet_relevant')
+    # logging.debug('Received: tweet_relevant')
     emit('log', {'data': 'Connected'})
     data['queues']['annotation_response'].put('relevant')
 
 @socketio.on('tweet_irrelevant')
 def tweet_irrelevant():
-    logging.debug('Received: tweet_irrelevant')
+    # logging.debug('Received: tweet_irrelevant')
     data['queues']['annotation_response'].put('irrelevant')
 
 @socketio.on('refresh')
 def tweet_irrelevant():
-    logging.debug('Received refresh')
+    # logging.debug('Received refresh')
     data['queues']['annotation_response'].put('refresh')
 
 @socketio.on('skip')
 def tweet_irrelevant():
-    logging.debug('Received skip')
+    # logging.debug('Received skip')
     data['queues']['annotation_response'].put('skip')
 
 @socketio.on('connect')
@@ -173,7 +173,7 @@ if __name__ == '__main__':
     n_before_train = 1
     # client = MongoClient("mongodb://ian:secretPassword@123.45.67.89/")  # defaults to port 27017
     uri = "mongodb+srv://%s:%s@%s" % ("HAKET", "HAKETBS", "haket-du1us.mongodb.net")
-
+# mongodb+srv://HAKET:HAKETBS@haket-du1us.mongodb.net
     data = {
             'database': MongoClient(uri)[db][collection],
             'queues': {
