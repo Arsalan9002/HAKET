@@ -234,7 +234,7 @@ if __name__ == '__main__':
     try:
         # logging.info('Starting interface...')
         # socketio.run(app, host='192.168.0.101', debug=False, log_output=False)
-        socketio.run(app, debug=False, log_output=False)
+        socketio.run(app, port=5000, debug=False, log_output=False)
     except KeyboardInterrupt:
         # logging.info('Keyboard Interrupt. Sending stoprequest to all threads')
         annotator.join()
